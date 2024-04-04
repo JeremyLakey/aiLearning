@@ -1,5 +1,5 @@
 import random
-
+from .focus import focus_words
 
 def shift(cycle):
 
@@ -50,7 +50,7 @@ class MemoryMap:
 
         line = f.readline().lower()
         self.files[i] = line
-        words = line.split()
+        words = focus_words(line.split(" "))
         print(words)
         cycle = ["", "", ""]
         for word in words:
