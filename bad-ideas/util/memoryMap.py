@@ -1,5 +1,5 @@
 import random
-from .focus import focus_words
+from .focus import focus_words, punc_filter
 
 def shift(cycle):
 
@@ -54,8 +54,9 @@ class MemoryMap:
         print(words)
         cycle = ["", "", ""]
         for word in words:
+            w = punc_filter(word)
             shift(cycle)
-            cycle[0] = word
+            cycle[0] = w
 
             insert_to_map(cycle, self.m, i)
 
@@ -64,4 +65,6 @@ class MemoryMap:
         get_from_map(cycle, self.m)
 
     def get_memory(self, i):
+        if i not in self.files:
+            return ""
         return self.files[i]
