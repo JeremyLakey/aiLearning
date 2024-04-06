@@ -1,7 +1,8 @@
-from util.files import get_file_paths
+from util.files import get_file_paths, add_file
 from util.memoryMap import MemoryMap
 from util.focus import focus_words, punc_filter, get_score
 from util.valueMap import get_values
+from util.chat import do_chat
 
 
 def filter_mem_tups(tuples):
@@ -41,25 +42,24 @@ def select_mems(text, mem_map):
 
 
 # builds the prompt to send to chap GPT
-def build_message(text, mem_map, mems, values):
+def build_prompt(text, mem_map, mems, values):
 
-    final = "Your name is Kyle\nYou value 5 things:"
+    final = "Your name is Jerome\n\nYou value 5 things:"
 
     for v in values:
         final += "\n" + v
 
-    final += "\n\nYou are asked: \n" + text + "\n"
 
     if len(mems) > 0:
         if len(mems) == 1:
-            final += "\nYou remember 1 thing:"
+            final += "\n\nYou remember 1 thing:"
             final += "\n" + mem_map.get_memory(mems[0][1])
         else:
-            final += "\nYou remember " + str(len(mems)) + " things:"
+            final += "\n\nYou remember " + str(len(mems)) + " things:"
             for m in mems:
                 final += "\n" + mem_map.get_memory(m[1])
 
-    return final
+    return final + "\n\nUser says: " + text
 
 
 def main():
@@ -69,8 +69,9 @@ def main():
 
     while True:
         input_text = input("You: ")
-        final_message = build_message(input_text, mem_map, select_mems(input_text, mem_map), get_values())
-        print(final_message)
+        final_text = build_prompt(input_text, mem_map, select_mems(input_text, mem_map), get_values())
+        reply = do_chat(input_text)
+        add_file(reply.split(".")[0])
 
 
 

@@ -1,19 +1,21 @@
 import openai
+from openai import OpenAI
 import os
 
-openai.my_api_key = os.environ["GPTKEY"]
 
-messages = [{"role": "system", "content": "You are a intelligent assistant."}]
+def do_chat(prompt, model="gpt-3.5-turbo"):
+    client = OpenAI(api_key = os.environ["GPTKEY"])
 
-def do_chat(text):
-
-    messages.append(
-        {"role": "user", "content": text},
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+        {
+            "role": "user",
+            "content": "How do I output all files in a directory using Python?",
+        },
+            ]
     )
-    chat = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo", messages=messages
-    )
 
-    reply = chat.choices[0].message.content
-    print(f"ChatGPT: {reply}")
-    messages.append({"role": "assistant", "content": reply})
+    message = response.choices[0].text.strip()
+    return message
+

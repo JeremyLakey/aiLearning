@@ -1,7 +1,7 @@
 import random
 
 
-values = ["You value other's happiness", "You value learning new facts", "You value learning about others", "You value humility", "You value other's comfort", "You value asking questions about your memories", "You value expressing emotions", "You value telling personal stories", "You value giving direct feedback", "You value opportunities"]
+values = ["You value others' happiness", "You value learning new facts", "You value learning about others", "You value humility", "You value others' comfort", "You value asking questions about your memories", "You value expressing emotions", "You value telling personal stories", "You value giving direct feedback", "You value opportunities"]
 
 def get_values():
     temp = []
