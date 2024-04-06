@@ -2,11 +2,10 @@ from os import listdir
 from os.path import isfile, join
 
 
-memoryPath = "./memories"
-
+memoryPath = "./bad-ideas/memories"
 
 def get_file_paths():
-    return ["./memories/" + f for f in listdir(memoryPath) if isfile(join(memoryPath, f))]
+    return ["./bad-ideas/memories/" + f for f in listdir(memoryPath) if isfile(join(memoryPath, f))]
 
 
 def add_file(text):

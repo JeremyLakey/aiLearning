@@ -16,8 +16,8 @@ remove_list = ['.', '$', '\"', ',', '#', "@", "!", "%", "^", "&", "*", "\'", ";"
 
 def punc_filter(word):
     for c in remove_list:
-        word.replace(c, "")
-
+        word = word.replace(c, "")
+    return word
 
 score_alpha = {
     "a": 1,
@@ -49,6 +49,8 @@ score_alpha = {
 }
 
 def get_score(word):
+    if word is None:
+        return 0
     total = 0
     for c in word:
         if c in score_alpha:

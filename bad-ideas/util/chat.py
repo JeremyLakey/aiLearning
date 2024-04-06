@@ -2,7 +2,6 @@ import openai
 import os
 
 openai.my_api_key = os.environ["GPTKEY"]
-print(os.environ["GPTKEY"])
 
 messages = [{"role": "system", "content": "You are a intelligent assistant."}]
 

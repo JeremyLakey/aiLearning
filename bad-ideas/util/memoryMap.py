@@ -32,9 +32,8 @@ def get_from_map(cycle, m):
     if cycle[2] not in m[cycle[0]][cycle[1]]:
         return -1
 
-    if len(m[cycle[0]][cycle[1]][cycle[2]]) == 0:
+    if m[cycle[0]][cycle[1]][cycle[2]] is None or len(m[cycle[0]][cycle[1]][cycle[2]]) == 0:
         return -1
-
     return random.choice(m[cycle[0]][cycle[1]][cycle[2]])
 
 
@@ -51,7 +50,6 @@ class MemoryMap:
         line = f.readline().lower()
         self.files[i] = line
         words = focus_words(line.split(" "))
-        print(words)
         cycle = ["", "", ""]
         for word in words:
             w = punc_filter(word)
@@ -62,7 +60,7 @@ class MemoryMap:
 
     # returns -1 on missing
     def cycle_attempt(self, cycle):
-        get_from_map(cycle, self.m)
+        return get_from_map(cycle, self.m)
 
     def get_memory(self, i):
         if i not in self.files:
