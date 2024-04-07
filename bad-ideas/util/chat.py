@@ -11,11 +11,12 @@ def do_chat(prompt, model="gpt-3.5-turbo"):
         messages=[
         {
             "role": "user",
-            "content": "How do I output all files in a directory using Python?",
+            "content": prompt,
         },
             ]
     )
+    print(response.choices[0])
 
-    message = response.choices[0].text.strip()
+    message = response.choices[0].message.content.strip()
     return message
 

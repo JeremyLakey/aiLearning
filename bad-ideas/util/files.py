@@ -9,7 +9,10 @@ def get_file_paths():
 
 
 def add_file(text):
+    print("Adding...")
+    print(text)
     next = len([f for f in listdir(memoryPath) if isfile(join(memoryPath, f))])
-    f = open(str(next) + ".txt", mode='w')
+    print(next)
+    f = open("./bad-ideas/memories/" + str(next) + ".txt", mode='w')
     f.write(text)
     f.close()

@@ -1,3 +1,5 @@
+import random
+
 from util.files import get_file_paths, add_file
 from util.memoryMap import MemoryMap
 from util.focus import focus_words, punc_filter, get_score
@@ -62,15 +64,30 @@ def build_prompt(text, mem_map, mems, values):
     return final + "\n\nUser says: " + text
 
 
+def maybe_add_memory(reply):
+    if random.randint(0, 5) != 0:
+        return
+
+    s = reply.split(".")
+    t1 = random.choice(s)
+    t2 = random.choice(s)
+    if t1 != t2:
+        add_file(t1 + ". " + t2 + ".")
+    else:
+        add_file(t1 + ".")
+
+
+
 def main():
     files = get_file_paths()
     mem_map = MemoryMap(files)
 
 
     while True:
-        input_text = input("You: ")
+        input_text = input("\nYou: ")
         final_text = build_prompt(input_text, mem_map, select_mems(input_text, mem_map), get_values())
         reply = do_chat(input_text)
+        print("Jerome: " + reply)
         add_file(reply.split(".")[0])
 
 
