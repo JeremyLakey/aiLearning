@@ -6,6 +6,8 @@ from util.focus import focus_words, punc_filter, get_score
 from util.valueMap import get_values
 from util.chat import do_chat
 
+files = None
+mem_map = None
 
 def filter_mem_tups(tuples):
     if tuples is None:
@@ -77,18 +79,29 @@ def maybe_add_memory(reply):
         add_file(t1 + ".")
 
 
-
-def main():
+def set_up_jerome():
+    global files, mem_map
     files = get_file_paths()
     mem_map = MemoryMap(files)
 
 
+def do_chat_jerome(input_text):
+    global files, mem_map
+    final_text = build_prompt(input_text, mem_map, select_mems(input_text, mem_map), get_values())
+    reply = do_chat(input_text)
+    print("Jerome: " + reply)
+    #add_file(reply.split(".")[0])
+    return reply
+
+
+def main():
+    global files, mem_map
+    set_up_jerome()
+
+
     while True:
         input_text = input("\nYou: ")
-        final_text = build_prompt(input_text, mem_map, select_mems(input_text, mem_map), get_values())
-        reply = do_chat(input_text)
-        print("Jerome: " + reply)
-        add_file(reply.split(".")[0])
+        do_chat_jerome(input_text)
 
 
 
